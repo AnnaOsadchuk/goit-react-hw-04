@@ -16,7 +16,7 @@ export default function ImageCard({
         <img className={css.img} src={small} alt={alt_description} />
       </div>
       <div className={css.textWrapper}>
-        <SiFacebook className={css.faseBook} size="18" />
+        <SiFacebook className={css.faseBook} size="20" />
         <ul className={css.list}>
           <li className={css.item}>
             <FaUserAlt className={css.srcMan} size="14" />

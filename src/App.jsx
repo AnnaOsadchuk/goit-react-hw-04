@@ -3,10 +3,14 @@ import { fetchPhotos } from "./gallery-api";
 
 import css from "./App.module.css";
 
+import SearchBar from "./components/SearchBar/SearchBar";
 import ImageGallery from "./components/ImageGallery/ImageGallery";
+import Loader from "./components/Loader/Loader";
 
 export default function App() {
   const [imgs, setImgs] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     async function getPhotos() {
       const data = await fetchPhotos("cat", 1);
@@ -17,8 +21,9 @@ export default function App() {
   return (
     <>
       <div className={css.container}>
-        <h1 className={css.title}>Photo</h1>
+        <SearchBar />
         {imgs.length > 0 && <ImageGallery items={imgs} />}
+        {loading && <Loader />}
       </div>
     </>
   );
