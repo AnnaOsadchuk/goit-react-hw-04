@@ -1,0 +1,62 @@
+ul,
+li {
+  list-style: none;
+}
+
+.container {
+  width: 320px;
+  height: auto;
+  margin: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px #ccc;
+  overflow: hidden;
+}
+
+.img {
+  border-bottom: 1px solid rgb(70, 66, 66);
+  width: 320px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.list {
+  display: flex;
+  gap: 4px;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+}
+
+.item {
+  display: flex;
+}
+.srcMan {
+  margin-top: 10px;
+  color: rgb(51, 49, 49);
+}
+
+.text {
+  text-align: center;
+  margin: 5px 0;
+  padding-left: 8px;
+  font-size: 16px;
+}
+.faseBook {
+  margin-left: 10px;
+  color: black;
+}
+.textLike {
+  text-align: center;
+  margin: 0;
+  padding-left: 8px;
+  font-size: 16px;
+}
