@@ -6,7 +6,6 @@ li {
 .container {
   width: 320px;
   height: auto;
-  margin: 10px;
   border: 1px solid #ccc;
   box-shadow: 0px 0px 10px #ccc;
   overflow: hidden;
@@ -33,20 +32,20 @@ li {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 10px;
+  padding: 5px;
 }
 
 .item {
   display: flex;
 }
 .srcMan {
-  margin-top: 10px;
+  margin-top: 5px;
   color: rgb(51, 49, 49);
 }
 
 .text {
   text-align: center;
-  margin: 5px 0;
+  margin: 0;
   padding-left: 8px;
   font-size: 16px;
 }
