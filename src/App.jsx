@@ -17,28 +17,34 @@ export default function App() {
   const [error, setError] = useState(false);
 
   const handleSearch = async (newImg) => {
+    setQuery(newImg);
+    setPage(1);
+    setImgs([]);
     try {
       setLoading(true);
       setError(false);
       const data = await fetchPhotos(newImg, 1);
-      setLoading(false);
       setImgs(data);
+    } catch (error) {
+      setError(true);
+      setImgs([]); // Очистити зображення, якщо виникає помилка
+    } finally {
+      setLoading(false);
+    }
+  };
+  const handleLoadMore = async () => {
+    try {
+      setLoading(true);
+      const newPage = page + 1;
+      const newImages = await fetchPhotos(query, newPage);
+      setImgs((prevImgs) => [...prevImgs, ...newImages]);
+      setPage(newPage);
     } catch (error) {
       setError(true);
     } finally {
       setLoading(false);
     }
   };
-
-  /*  const handleSubmit = (query) => {
-    setQuery(query);
-    setPage(1);
-    setImgs([]);
-  }; */
-  const handleLoadMore = () => {
-    setPage(page + 1);
-  };
-
   return (
     <>
       <div className={css.container}>
