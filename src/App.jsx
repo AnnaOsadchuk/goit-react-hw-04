@@ -8,6 +8,7 @@ import ImageGallery from "./components/ImageGallery/ImageGallery";
 import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "./components/ImageModal/ImageModal";
 
 export default function App() {
   const [imgs, setImgs] = useState([]);
@@ -15,6 +16,11 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [imgUrl, setImgsUrl] = useState([]);
+
+  const [likes, setLikes] = useState(null);
+  const [userName, setUserName] = useState(null);
 
   const handleSearch = async (newImg) => {
     setQuery(newImg);
@@ -27,7 +33,7 @@ export default function App() {
       setImgs(data);
     } catch (error) {
       setError(true);
-      setImgs([]); // Очистити зображення, якщо виникає помилка
+      setImgs([]);
     } finally {
       setLoading(false);
     }
@@ -45,15 +51,39 @@ export default function App() {
       setLoading(false);
     }
   };
+
+  const openModal = (url, like, nameUser) => {
+    setImgsUrl(url);
+    setLikes(like);
+    setUserName(nameUser);
+    toggle();
+  };
+
+  const toggle = () => {
+    setModal(!modal);
+  };
+
   return (
     <>
       <div className={css.container}>
         <SearchBar onSearch={handleSearch} />
         {error && <ErrorMessage />}
-        {imgs.length > 0 && <ImageGallery items={imgs} />}
+        {imgs.length > 0 && (
+          <ImageGallery items={imgs} onImgClick={openModal} />
+        )}
         {loading && <Loader />}
         {imgs.length > 0 && !loading && (
           <LoadMoreBtn onClick={handleLoadMore} />
+        )}
+        {modal && (
+          <ImageModal
+            image={imgUrl}
+            imgModal={modal}
+            item={imgs}
+            onModalClose={toggle}
+            imgLikes={likes}
+            user={userName}
+          />
         )}
       </div>
     </>

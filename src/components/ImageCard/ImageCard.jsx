@@ -5,15 +5,21 @@ import { FaUserAlt } from "react-icons/fa";
 export default function ImageCard({
   item: {
     alt_description,
-    urls: { small },
+    urls: { small, regular },
     likes,
     user: { name },
   },
+  onImgClick,
 }) {
   return (
     <div className={css.container}>
       <div className={css.imgWrapper}>
-        <img className={css.img} src={small} alt={alt_description} />
+        <img
+          className={css.img}
+          src={small}
+          alt={alt_description}
+          onClick={() => onImgClick(regular, likes, name)}
+        />
       </div>
       <div className={css.textWrapper}>
         <SiFacebook className={css.faseBook} size="20" />
@@ -30,7 +36,3 @@ export default function ImageCard({
     </div>
   );
 }
-
-/* onClick={() => onImgClick(regular, likes, name)}
-          width="210"
-          height="130" */

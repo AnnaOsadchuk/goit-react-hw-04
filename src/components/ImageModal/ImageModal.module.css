@@ -1,0 +1,48 @@
+.modalImg {
+  width: "100%";
+  height: "auto";
+}
+.img {
+  border-bottom: 1px solid rgb(142, 136, 136);
+  width: 620px;
+  height: 400px;
+  object-fit: cover;
+}
+
+.list {
+  display: flex;
+  gap: 4px;
+  padding: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.textWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px;
+}
+
+.item {
+  display: flex;
+}
+.srcMan {
+  margin-top: 5px;
+  color: rgb(51, 49, 49);
+}
+.text {
+  text-align: center;
+  margin: 0;
+  padding-left: 8px;
+  font-size: 24px;
+}
+.faseBook {
+  margin-left: 10px;
+  color: black;
+}
+.ReactModal__Content--after-open {
+  padding: 0px;
+}

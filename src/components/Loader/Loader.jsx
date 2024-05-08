@@ -6,8 +6,8 @@ export default function Loader() {
     <div className={css.container}>
       <RotatingLines
         visible={true}
-        height="96"
-        width="96"
+        height="48"
+        width="48"
         color="grey"
         strokeWidth="5"
         animationDuration="0.75"
