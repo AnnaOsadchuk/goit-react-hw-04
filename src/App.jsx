@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchPhotos } from "./gallery-api";
 
 import css from "./App.module.css";
@@ -9,6 +9,7 @@ import Loader from "./components/Loader/Loader";
 import ErrorMessage from "./components/ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "./components/LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./components/ImageModal/ImageModal";
+import NotFoundError from "./components/NotFoundError/NotFoundError";
 
 export default function App() {
   const [imgs, setImgs] = useState([]);
@@ -18,38 +19,61 @@ export default function App() {
   const [error, setError] = useState(false);
   const [modal, setModal] = useState(false);
   const [imgUrl, setImgsUrl] = useState([]);
-
+  const [notFoundError, setNotFoundError] = useState(false);
   const [likes, setLikes] = useState(null);
   const [userName, setUserName] = useState(null);
 
-  const handleSearch = async (newImg) => {
-    setQuery(newImg);
-    setPage(1);
-    setImgs([]);
-    try {
+  const handleSearch = async (newQuery) => {
+    if (newQuery !== query) {
+      setQuery(newQuery);
+      setPage(1);
+      setImgs([]);
       setLoading(true);
       setError(false);
-      const data = await fetchPhotos(newImg, 1);
-      setImgs(data);
-    } catch (error) {
-      setError(true);
-      setImgs([]);
-    } finally {
-      setLoading(false);
+      setNotFoundError(false);
+
+      try {
+        const data = await fetchPhotos(newQuery, 1);
+        if (data.length === 0) {
+          setNotFoundError(true);
+        }
+        setImgs(data);
+      } catch (error) {
+        setError(true);
+        setImgs([]);
+      } finally {
+        setLoading(false);
+      }
     }
   };
-  const handleLoadMore = async () => {
-    try {
+
+  useEffect(() => {
+    if (!query) return;
+
+    const fetchImages = async () => {
       setLoading(true);
-      const newPage = page + 1;
-      const newImages = await fetchPhotos(query, newPage);
-      setImgs((prevImgs) => [...prevImgs, ...newImages]);
-      setPage(newPage);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
+      setError(false);
+      setNotFoundError(false);
+
+      try {
+        const newImgs = await fetchPhotos(query, page);
+        if (newImgs.length === 0) {
+          setNotFoundError(true);
+        } else {
+          setImgs((prevImgs) => [...prevImgs, ...newImgs]);
+        }
+      } catch (error) {
+        setError(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (page > 1) fetchImages();
+  }, [query, page]);
+
+  const handleLoadMore = () => {
+    setPage(page + 1);
   };
 
   const openModal = (url, like, nameUser) => {
@@ -67,10 +91,12 @@ export default function App() {
     <>
       <div className={css.container}>
         <SearchBar onSearch={handleSearch} />
-        {error && <ErrorMessage />}
         {imgs.length > 0 && (
           <ImageGallery items={imgs} onImgClick={openModal} />
         )}
+        {notFoundError && <NotFoundError />}
+        {error && <ErrorMessage />}
+
         {loading && <Loader />}
         {imgs.length > 0 && !loading && (
           <LoadMoreBtn onClick={handleLoadMore} />
