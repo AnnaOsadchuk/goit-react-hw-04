@@ -12,12 +12,14 @@ export default function ImageCard({
   onImgClick,
 }) {
   return (
-    <div
-      className={css.container}
-      onClick={() => onImgClick(regular, likes, name)}
-    >
+    <div className={css.container}>
       <div className={css.imgWrapper}>
-        <img className={css.img} src={small} alt={alt_description} />
+        <img
+          className={css.img}
+          src={small}
+          alt={alt_description}
+          onClick={() => onImgClick(regular, likes, name)}
+        />
       </div>
       <div className={css.textWrapper}>
         <SiFacebook className={css.faseBook} size="20" />
